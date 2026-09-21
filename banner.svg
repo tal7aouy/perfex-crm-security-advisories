@@ -1,0 +1,108 @@
+<svg width="900" height="320" viewBox="0 0 900 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Perfex CRM Security Advisories — white-box source review, 5 findings (1 Critical, 4 High)">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="900" y2="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B0E17"/>
+      <stop offset="0.55" stop-color="#141019"/>
+      <stop offset="1" stop-color="#1B0E10"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F97316"/>
+      <stop offset="1" stop-color="#EF4444"/>
+    </linearGradient>
+    <linearGradient id="crit" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#EF4444"/>
+      <stop offset="1" stop-color="#B91C1C"/>
+    </linearGradient>
+    <linearGradient id="high" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#D97706"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#EF4444" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#EF4444" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#FFFFFF" fill-opacity="0.045"/>
+    </pattern>
+    <clipPath id="round"><rect width="900" height="320" rx="14"/></clipPath>
+    <style>
+      .disp { font-family: "Segoe UI", Inter, "Helvetica Neue", Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; }
+    </style>
+  </defs>
+
+  <g clip-path="url(#round)">
+    <rect width="900" height="320" fill="url(#bg)"/>
+    <rect width="900" height="320" fill="url(#dots)"/>
+    <circle cx="760" cy="30" r="240" fill="url(#glow)"/>
+
+    <!-- ===== Left: wordmark ===== -->
+    <rect x="50" y="50" width="54" height="4" rx="2" fill="url(#accent)"/>
+
+    <text x="48" y="106" class="disp" font-size="42" font-weight="800" fill="#F8FAFC" letter-spacing="-1">Perfex CRM</text>
+    <text x="50" y="140" class="disp" font-size="23" font-weight="700" letter-spacing="3.5" fill="url(#accent)">SECURITY ADVISORIES</text>
+
+    <text x="50" y="180" class="disp" font-size="13.5" fill="#94A3B8">White-box source review &#183; CodeIgniter 3.1.11 &#183; PHP 7.4</text>
+    <text x="50" y="202" class="mono" font-size="12" fill="#64748B">1,527 PHP files &#183; Critical &amp; High only &#183; PoC + patch each</text>
+
+    <!-- severity pills -->
+    <g class="mono" font-size="12" font-weight="700">
+      <rect x="50" y="230" width="118" height="26" rx="13" fill="#EF4444" fill-opacity="0.14" stroke="#EF4444" stroke-opacity="0.5"/>
+      <circle cx="66" cy="243" r="4" fill="#EF4444"/>
+      <text x="78" y="247" fill="#FCA5A5">1 Critical</text>
+
+      <rect x="176" y="230" width="86" height="26" rx="13" fill="#F59E0B" fill-opacity="0.14" stroke="#F59E0B" stroke-opacity="0.5"/>
+      <circle cx="192" cy="243" r="4" fill="#F59E0B"/>
+      <text x="204" y="247" fill="#FCD34D">4 High</text>
+    </g>
+
+    <!-- CWE chips -->
+    <g class="mono" font-size="11" fill="#CBD5E1">
+      <rect x="50" y="268" width="74" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.12"/>
+      <text x="60" y="283">CWE-502</text>
+      <rect x="132" y="268" width="74" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.12"/>
+      <text x="142" y="283">CWE-330</text>
+      <rect x="214" y="268" width="66" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.12"/>
+      <text x="224" y="283">CWE-89</text>
+      <rect x="288" y="268" width="66" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.12"/>
+      <text x="298" y="283">CWE-22</text>
+    </g>
+
+    <!-- ===== Right: terminal ===== -->
+    <g transform="translate(486,40)">
+      <rect x="0" y="0" width="366" height="240" rx="10" fill="#070A12" stroke="#FFFFFF" stroke-opacity="0.10"/>
+      <!-- title bar -->
+      <rect x="0" y="0" width="366" height="30" rx="10" fill="#0E1424"/>
+      <rect x="0" y="18" width="366" height="12" fill="#0E1424"/>
+      <circle cx="18" cy="15" r="5" fill="#FF5F56"/>
+      <circle cx="36" cy="15" r="5" fill="#FFBD2E"/>
+      <circle cx="54" cy="15" r="5" fill="#27C93F"/>
+      <text x="183" y="19" text-anchor="middle" class="mono" font-size="11" fill="#64748B">kill-chain.sh — zsh</text>
+
+      <g class="mono" font-size="11.5">
+        <text x="16" y="54" fill="#94A3B8"><tspan fill="#22D3EE">$</tspan> ./poc.sh --target crm.local</text>
+
+        <!-- VULN rows: label ..... result -->
+        <text x="16" y="80" fill="#94A3B8">01 object-injection</text>
+        <text x="350" y="80" text-anchor="end" fill="#FCA5A5" font-weight="700">RCE</text>
+        <text x="16" y="102" fill="#94A3B8">02 reset-tokens</text>
+        <text x="350" y="102" text-anchor="end" fill="#FCD34D" font-weight="700">TAKEOVER</text>
+        <text x="16" y="124" fill="#94A3B8">03 datatables-sqli</text>
+        <text x="350" y="124" text-anchor="end" fill="#FCD34D" font-weight="700">DB DUMP</text>
+        <text x="16" y="146" fill="#94A3B8">04 relation-sqli</text>
+        <text x="350" y="146" text-anchor="end" fill="#FCD34D" font-weight="700">DB DUMP</text>
+        <text x="16" y="168" fill="#94A3B8">05 path-traversal</text>
+        <text x="350" y="168" text-anchor="end" fill="#FCD34D" font-weight="700">FILE READ</text>
+
+        <line x1="16" y1="184" x2="350" y2="184" stroke="#FFFFFF" stroke-opacity="0.08"/>
+
+        <text x="16" y="206" fill="#94A3B8">chain: 0 &#8594; admin &#8594; host</text>
+        <text x="350" y="206" text-anchor="end" fill="#EF4444" font-weight="800">COMPROMISED</text>
+
+        <text x="16" y="228" fill="#475569">max CVSS <tspan fill="#F87171" font-weight="700">9.8</tspan> &#183; 5/5 verified</text>
+        <rect x="238" y="219" width="112" height="10" rx="5" fill="#FFFFFF" fill-opacity="0.06"/>
+        <rect x="238" y="219" width="112" height="10" rx="5" fill="url(#crit)"/>
+      </g>
+    </g>
+  </g>
+</svg>

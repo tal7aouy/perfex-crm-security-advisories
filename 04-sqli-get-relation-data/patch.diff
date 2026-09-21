@@ -1,0 +1,21 @@
+--- a/application/controllers/admin/Misc.php
++++ b/application/controllers/admin/Misc.php
+ public function get_relation_data() {
+     if ($this->input->post()) {
++        // Security (VULN-04): require staff authorization before returning relation data
++        if (!is_staff_logged_in()) {
++            ajax_access_denied();
++        }
+         $type = $this->input->post('type');
+         $data = get_relation_data($type, '', $this->input->post('extra'));
+
+--- a/application/helpers/relation_helper.php
++++ b/application/helpers/relation_helper.php
+-            $where_contacts .= ' AND '. db_prefix() . 'contacts.userid='. $extra['client_id'];
++            $where_contacts .= ' AND '. db_prefix() . 'contacts.userid='. (int) $extra['client_id'];
+@@
+-                $where_contacts .= ' AND ' . db_prefix() . 'contacts.userid=' . $CI->db->escape_str($CI->input->post('contact_userid'));
++                $where_contacts .= ' AND ' . db_prefix() . 'contacts.userid=' . (int) $CI->input->post('contact_userid');
+@@
+-                $where_projects .= 'clientid=' . $CI->db->escape_str($CI->input->post('customer_id'));
++                $where_projects .= 'clientid=' . (int) $CI->input->post('customer_id');

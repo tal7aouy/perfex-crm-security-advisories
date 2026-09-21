@@ -1,0 +1,25 @@
+--- a/application/controllers/Download.php
++++ b/application/controllers/Download.php
+ public function preview_image() {
+-        $path      = FCPATH . $this->input->get('path');
++        // Security (VULN-05): confine to the uploads root; block ../ traversal
++        $base = realpath(FCPATH . 'uploads');
++        $path = realpath(FCPATH . $this->input->get('path'));
++        if ($path === false || $base === false || strpos($path, $base . DIRECTORY_SEPARATOR) !== 0) {
++            show_404();
++        }
+         $file_type = $this->input->get('type');
+         ...
+ }
+
+ public function preview_video() {
+-        $path      = FCPATH . $this->input->get('path');
++        // Security (VULN-05): confine to the uploads root; block ../ traversal
++        $base = realpath(FCPATH . 'uploads');
++        $path = realpath(FCPATH . $this->input->get('path'));
++        if ($path === false || $base === false || strpos($path, $base . DIRECTORY_SEPARATOR) !== 0) {
++            show_404();
++        }
+         $file_type = $this->input->get('type');
+         ...
+ }

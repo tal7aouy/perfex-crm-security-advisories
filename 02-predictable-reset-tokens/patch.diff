@@ -1,0 +1,24 @@
+--- a/application/helpers/general_helper.php
++++ b/application/helpers/general_helper.php
+@@ app_generate_hash()
+-/**
+- * Generate md5 hash
+- * @return string
+- */
+-function app_generate_hash()
+-{
+-    return md5(rand() . microtime() . time() . uniqid());
+-}
++/**
++ * Generate a cryptographically secure random hash (VULN-02).
++ * Used for password-reset / set-password tokens (new_pass_key); must be unpredictable.
++ * @return string 64-char hex
++ */
++function app_generate_hash()
++{
++    try {
++        return bin2hex(random_bytes(32));
++    } catch (Exception $e) {
++        return bin2hex(openssl_random_pseudo_bytes(32));
++    }
++}

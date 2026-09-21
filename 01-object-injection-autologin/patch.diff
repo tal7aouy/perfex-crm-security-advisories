@@ -1,0 +1,57 @@
+--- a/application/models/Authentication_model.php
++++ b/application/models/Authentication_model.php
+@@ create_autologin()
+-        $key = substr(md5(uniqid(rand() . get_cookie($this->config->item('sess_cookie_name')))), 0, 16);
++        // Security (VULN-01/02): CSPRNG token, no md5(uniqid(rand()))
++        try {
++            $key = bin2hex(random_bytes(16));
++        } catch (Exception $e) {
++            $key = bin2hex(openssl_random_pseudo_bytes(16));
++        }
+         $this->user_autologin->delete($user_id, $key, $staff);
+         if ($this->user_autologin->set($user_id, md5($key), $staff)) {
+             set_cookie([
+-                'name'  => 'autologin',
+-                'value' => serialize([
+-                    'user_id' => $user_id,
+-                    'key'     => $key,
+-                ]),
++                'name'  => 'autologin',
++                // Security (VULN-01): opaque token, never serialize() into a cookie
++                'value' => $this->encode_autologin_cookie($user_id, $key),
+                 'expire' => 60 * 60 * 24 * 31 * 2, // 2 months
+             ]);
+
+@@ delete_autologin()
+         if ($cookie = get_cookie('autologin', true)) {
+-            $data = unserialize($cookie);
+-            $this->user_autologin->delete($data['user_id'], md5($data['key']), $staff);
++            $data = $this->decode_autologin_cookie($cookie);
++            if ($data !== false) {
++                $this->user_autologin->delete($data['user_id'], md5($data['key']), $staff);
++            }
+             delete_cookie('autologin', 'aal');
+         }
+     }
++
++    // Security (VULN-01): encode/decode the autologin cookie WITHOUT serialize()/unserialize()
++    private function encode_autologin_cookie($user_id, $key)
++    {
++        return (int) $user_id . '|' . $key;
++    }
++
++    private function decode_autologin_cookie($cookie)
++    {
++        $parts = explode('|', (string) $cookie, 2);
++        if (count($parts) !== 2 || !ctype_digit($parts[0]) || $parts[1] === '') {
++            return false;
++        }
++        return ['user_id' => (int) $parts[0], 'key' => $parts[1]];
++    }
+
+@@ autologin()
+             if ($cookie = get_cookie('autologin', true)) {
+-                $data = unserialize($cookie);
+-                if (isset($data['key']) and isset($data['user_id'])) {
++                $data = $this->decode_autologin_cookie($cookie);
++                if ($data !== false && isset($data['key']) and isset($data['user_id'])) {

@@ -1,0 +1,29 @@
+--- a/application/views/admin/tables/subscriptions.php
++++ b/application/views/admin/tables/subscriptions.php
+-    array_push($where, 'AND project_id=' . $this->ci->db->escape_str($this->ci->input->get('project_id')));
++    array_push($where, 'AND project_id=' . (int) $this->ci->input->get('project_id'));
+-    array_push($where, 'AND ' . db_prefix() . 'subscriptions.clientid=' . $this->ci->db->escape_str($this->ci->input->get('client_id')));
++    array_push($where, 'AND ' . db_prefix() . 'subscriptions.clientid=' . (int) $this->ci->input->get('client_id'));
+
+--- a/application/views/admin/tables/tickets.php
++++ b/application/views/admin/tables/tickets.php
+-    array_push($where, 'AND project_id = ' . $this->ci->db->escape_str($this->ci->input->post('project_id')));
++    array_push($where, 'AND project_id = ' . (int) $this->ci->input->post('project_id'));
+
+--- a/application/views/admin/tables/estimate_request.php
++++ b/application/views/admin/tables/estimate_request.php
+-    array_push($where, 'AND assigned =' . $this->ci->db->escape_str($this->ci->input->post('assigned')));
++    array_push($where, 'AND assigned =' . (int) $this->ci->input->post('assigned'));
+-    array_push($where, 'AND status IN (' . implode(',', $this->ci->db->escape_str($this->ci->input->post('status'))) . ')');
++    array_push($where, 'AND status IN (' . implode(',', array_map('intval', (array) $this->ci->input->post('status'))) . ')');
+
+--- a/application/views/admin/tables/staff_projects.php
++++ b/application/views/admin/tables/staff_projects.php
+-    $staff_id = $this->ci->input->post('staff_id');
++    $staff_id = (int) $this->ci->input->post('staff_id');
+
+--- a/application/views/admin/tables/all_contacts.php
++++ b/application/views/admin/tables/all_contacts.php
+-        array_push($where, 'AND ... purpose_id=' . $this->ci->db->escape_str(strafter($filter, 'consent_')) . ' ...');
++        $purpose_id = (int) strafter($filter, 'consent_');
++        array_push($where, 'AND ... purpose_id=' . $purpose_id . ' ...');
